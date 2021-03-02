@@ -32,6 +32,7 @@ namespace PetInfoClient.Models
         public DateTime Birthdate { get; set; }
         public bool IsSpayedOrNeutered { get; set; }
         public DateTime LastVetVisit { get; set; }
+        public int Owner { get; set; }
 
         public Pet(string name)
         {
@@ -44,7 +45,7 @@ namespace PetInfoClient.Models
 
         public override string ToString()
         {
-            return $"{Id} - {Name} - {Type} - {Breed}";
+            return $"{Id} - {Name} - {Type} - {Breed} - {Owner}";
         }
     }
 }

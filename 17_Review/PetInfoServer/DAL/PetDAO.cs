@@ -61,6 +61,7 @@ namespace PetInfoServer.DAL
                     cmd.Parameters.AddWithValue("@name", pet.Name);
                     cmd.Parameters.AddWithValue("@type", pet.Type);
                     cmd.Parameters.AddWithValue("@breed", pet.Breed);
+                    //cmd.Parameters.AddWithValue("@owner", pet.Owner);
 
                     int count = cmd.ExecuteNonQuery();
 
@@ -85,6 +86,7 @@ namespace PetInfoServer.DAL
             pet.Name = Convert.ToString(reader["name"]);
             pet.Type = Convert.ToString(reader["type"]);
             pet.Breed = Convert.ToString(reader["breed"]);
+            //pet.Owner = Convert.ToInt32(reader["owner"]);
             return pet;
         }
     }
