@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.779
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetInfoServer", "PetInfoServer\PetInfoServer.csproj", "{5D0C4FB7-6A5E-4A3B-81A5-6F12D3DEB17E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetInfoClient", "PetInfoClient\PetInfoClient.csproj", "{B34C7EB1-3E48-4062-9839-7F180DFB0243}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5D0C4FB7-6A5E-4A3B-81A5-6F12D3DEB17E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D0C4FB7-6A5E-4A3B-81A5-6F12D3DEB17E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D0C4FB7-6A5E-4A3B-81A5-6F12D3DEB17E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D0C4FB7-6A5E-4A3B-81A5-6F12D3DEB17E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B34C7EB1-3E48-4062-9839-7F180DFB0243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B34C7EB1-3E48-4062-9839-7F180DFB0243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B34C7EB1-3E48-4062-9839-7F180DFB0243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B34C7EB1-3E48-4062-9839-7F180DFB0243}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {962D2E95-E37F-4D47-8139-2025E71946FD}
+	EndGlobalSection
+EndGlobal
