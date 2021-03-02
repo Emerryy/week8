@@ -10,6 +10,7 @@ namespace WorldClient
     {
         private readonly LoginAPIService loginAPIService = new LoginAPIService();
         private readonly PetAPIService petAPIService = new PetAPIService();
+        private readonly OwnerApiService ownerAPI = new OwnerApiService();
 
 
 
@@ -46,6 +47,10 @@ namespace WorldClient
                     case "5":
 
                         Register();
+                        break;
+
+                    case "6":
+                        ListOwners();
                         break;
 
 
@@ -89,6 +94,7 @@ namespace WorldClient
             Console.WriteLine(" 3 - List pets");
             Console.WriteLine(" 4 - " + logInOut);
             Console.WriteLine(" 5 - Register");
+            Console.WriteLine("6 - List Owners");
             Console.WriteLine(" Q - Quit");
         }
 
@@ -203,6 +209,31 @@ namespace WorldClient
             {
                 Console.WriteLine("ERROR: Unable to add.");
             }
+        }
+
+        private void ListOwners()
+        {
+            List<Owner> owner = new List<Owner>();
+
+            try
+            {
+                owner = ownerAPI.GetOwners();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
+
+            Console.WriteLine();
+            Console.WriteLine();
+
+            Console.WriteLine("The owners are:");
+            foreach (Owner own in owner)
+            {
+                Console.WriteLine(own);
+            }
+            Console.WriteLine();
         }
     }
 }
