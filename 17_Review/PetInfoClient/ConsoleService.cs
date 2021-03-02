@@ -191,6 +191,9 @@ namespace WorldClient
             Console.Write("Enter breed (Chow, German Shepard, DSH, etc.): ");
             temp.Breed = Console.ReadLine();
 
+            Console.Write("Enter your owner ID): ");
+            temp.Owner = Convert.ToInt32(Console.ReadLine());
+
             bool result = petAPIService.AddPet(temp);
             if (result)
             {
