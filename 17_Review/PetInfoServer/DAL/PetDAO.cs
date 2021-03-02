@@ -11,8 +11,8 @@ namespace PetInfoServer.DAL
         private string connectionString;
 
         private string sqlGetPets = "SELECT * FROM pets;";
-        private string sqlAddPet = "INSERT INTO pets (name, type, breed) " +
-            "VALUES(@name, @type, @breed);";
+        private string sqlAddPet = "INSERT INTO pets (name, type, breed, owner) " +
+            "VALUES(@name, @type, @breed, @owner);";
 
         public PetDAO(string connectionString)
         {
@@ -61,7 +61,9 @@ namespace PetInfoServer.DAL
                     cmd.Parameters.AddWithValue("@name", pet.Name);
                     cmd.Parameters.AddWithValue("@type", pet.Type);
                     cmd.Parameters.AddWithValue("@breed", pet.Breed);
-                    //cmd.Parameters.AddWithValue("@owner", pet.Owner);
+
+                    cmd.Parameters.AddWithValue("@owner", pet.Owner);
+
 
                     int count = cmd.ExecuteNonQuery();
 
@@ -86,7 +88,9 @@ namespace PetInfoServer.DAL
             pet.Name = Convert.ToString(reader["name"]);
             pet.Type = Convert.ToString(reader["type"]);
             pet.Breed = Convert.ToString(reader["breed"]);
-            //pet.Owner = Convert.ToInt32(reader["owner"]);
+
+            pet.Owner = Convert.ToInt32(reader["owner"]);
+
             return pet;
         }
     }

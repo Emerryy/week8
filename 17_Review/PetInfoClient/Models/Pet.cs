@@ -34,6 +34,7 @@ namespace PetInfoClient.Models
         public DateTime LastVetVisit { get; set; }
         public int Owner { get; set; }
 
+
         public Pet(string name)
         {
             Name = name;
