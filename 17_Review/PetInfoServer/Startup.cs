@@ -74,6 +74,7 @@ namespace PetInfoServer
 
             services.AddTransient<IUserDAO, UserDAO>(m => new UserDAO(connectionString));
             services.AddTransient<IPetDAO, PetDAO>(m => new PetDAO(connectionString));
+            services.AddTransient<IOwnerDAO, OwnerDAO>(m => new OwnerDAO(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
