@@ -4,6 +4,7 @@ using System.Text;
 
 namespace PetInfoClient.Models
 {
+
     public class Owner
     {
         private string name;
