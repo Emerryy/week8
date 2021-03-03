@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TenmoClient.APIClients;
 using TenmoClient.Data;
 
+
 namespace TenmoClient
 {
     public class UserInterface
@@ -133,7 +134,7 @@ namespace TenmoClient
         }
 
 
-        public void GetBalance(int userId)
+        public void GetBalance()
         {
 
             Account account = new Account();

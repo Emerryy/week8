@@ -12,7 +12,7 @@ namespace TenmoServer.DAO
 
 
         private string connectionString;
-        public string sqlGetBalance = "SELECT balance FROM accounts WHERE account_id = @accountId";
+        //public string sqlGetBalance = "SELECT balance FROM accounts WHERE account_id = @accountId";
         public string sqlGetAccounts = "SELECT * FROM accounts";
 
         public AccountDAO(string connectionString)
@@ -29,7 +29,7 @@ namespace TenmoServer.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(sqlGetBalance, conn);
+                    SqlCommand cmd = new SqlCommand(sqlGetAccounts, conn);
                     cmd.Parameters.AddWithValue("@accountId", accountId);
                     SqlDataReader reader = cmd.ExecuteReader();
                     
