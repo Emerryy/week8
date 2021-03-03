@@ -9,8 +9,11 @@ namespace TenmoServer.DAO
 {
     public class AccountDAO : IAccountDAO
     {
+
+
         private string connectionString;
-        public string sqlGetBalance = "SELECT balance FROM accounts WHERE @accountId = accounts.account_id";
+        public string sqlGetBalance = "SELECT balance FROM accounts WHERE account_id = @accountId";
+        public string sqlGetAccounts = "SELECT * FROM accounts";
 
         public AccountDAO(string connectionString)
         {
@@ -18,7 +21,9 @@ namespace TenmoServer.DAO
         }
         public Account GetBalance(int accountId)
         {
-            Account returnAccount = null;
+
+            
+            Account returnAccount = new Account();
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -27,9 +32,11 @@ namespace TenmoServer.DAO
                     SqlCommand cmd = new SqlCommand(sqlGetBalance, conn);
                     cmd.Parameters.AddWithValue("@accountId", accountId);
                     SqlDataReader reader = cmd.ExecuteReader();
-                    if (reader.HasRows && reader.Read())
+                    
+                    while (reader.Read())
                     {
-                        returnAccount = ReaderToAccount(reader);
+                        Account temp = ReaderToAccount(reader);
+                        returnAccount = temp;
                     }
 
                 }
@@ -39,6 +46,37 @@ namespace TenmoServer.DAO
                 throw;
             }
             return returnAccount;
+        }
+
+        public List<Account> AllAccounts()
+        {
+
+            List<Account> accounts = new List<Account>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(sqlGetAccounts, conn);
+                    
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Account temp = ReaderToAccount(reader);
+                        accounts.Add(temp);
+                    }
+
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw;
+            }
+            return accounts;
+
+
         }
 
         private Account ReaderToAccount(SqlDataReader reader)

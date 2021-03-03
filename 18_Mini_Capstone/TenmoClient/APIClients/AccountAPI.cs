@@ -28,5 +28,24 @@ namespace TenmoClient.APIClients
                 return response.Data;
             }
         }
+
+        public List<Account> GetAllAccounts()
+        {
+            List<Account> account = new List<Account>();
+            RestRequest request = new RestRequest(API_URL);
+            IRestResponse<List<Account>> response = client.Get<List<Account>>(request);
+            if (response.ResponseStatus != ResponseStatus.Completed)
+            {
+                throw new Exception("Error occurred - unable to reach server.");
+            }
+            else if (!response.IsSuccessful)
+            {
+                throw new Exception("Error occurred - received non-success response: " + (int)response.StatusCode);
+            }
+            else
+            {
+                return response.Data;
+            }
+        }
     }
 }

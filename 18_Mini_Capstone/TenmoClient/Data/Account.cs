@@ -13,6 +13,7 @@ namespace TenmoClient.Data
         public override string ToString()
         {
             return $"Your balance is: ${Balance}";
+            //return $"{UserId} - {AccountId} - {Balance}";
         }
 
     }
