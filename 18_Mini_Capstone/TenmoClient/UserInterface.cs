@@ -133,50 +133,51 @@ namespace TenmoClient
         }
 
 
-        //public void GetBalance(int userId)
-        //{
-
-        //    Account account = new Account();
-        //    try
-        //    {
-        //        account = accountAPI.GetBalance();
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //        return;
-        //    }
-        //    Console.WriteLine();
-        //    Console.WriteLine();
-
-        //    Console.WriteLine("The balance is: " + account);
-
-        //}
-
-        public void GetBalance()
+        public void GetBalance(int userId)
         {
-            LoginUser loginUser = new LoginUser();
-            API_User apiUser = new API_User();
 
-            List<Account> allAccounts = accountAPI.GetAllAccounts();
+            Account account = new Account();
+            try
+            {
+                account = accountAPI.GetBalance();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Console.WriteLine();
+            Console.WriteLine();
 
-            Account myAccount = new Account();
+            Console.WriteLine("The balance is: " + account);
+
+        }
+
+        //public void GetBalance()
+        //{
+        //    LoginUser loginUser = new LoginUser();
+        //    API_User apiUser = new API_User();
+        //    string username = Environment.UserName;
+
+        //    List<Account> allAccounts = accountAPI.GetAllAccounts();
+
+        //    Account myAccount = new Account();
            
 
 
-            foreach (Account account in allAccounts)
-            {
-                if (account.UserId == apiUser.UserId)
-                {
-                    myAccount = account;
-                }
-            }
+        //    foreach (Account account in allAccounts)
+        //    {
+        //        if (account.UserId == apiUser.UserId)
+        //        {
+        //            myAccount = account;
+        //        }
+        //    }
             
-            Console.WriteLine();
-            Console.WriteLine();
+        //    Console.WriteLine();
+        //    Console.WriteLine();
 
-            Console.WriteLine("The balance is: " + myAccount.Balance);
+        //    Console.WriteLine("The balance is: " + myAccount.Balance);
 
-        }
+        //}
     }
 }
