@@ -34,7 +34,7 @@ namespace TenmoServer.DAO
 
                 }
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
                 throw;
             }
@@ -48,6 +48,6 @@ namespace TenmoServer.DAO
             account.UserId = Convert.ToInt32(reader["user_id"]);
             account.Balance = Convert.ToDecimal(reader["balance"]);
             return account;
-        } 
+        }
     }
 }

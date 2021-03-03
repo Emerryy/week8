@@ -100,5 +100,13 @@ namespace TenmoServer.DAO
                 Salt = Convert.ToString(reader["salt"]),
             };
         }
+
+        public int FindTheCurrentUserId()
+        {
+            string username = Environment.UserName;
+            User user = GetUser(username);
+            int userId = user.UserId;
+            return userId;
+        }
     }
 }
