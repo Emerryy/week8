@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TenmoClient.APIClients;
 using TenmoClient.Data;
 
@@ -130,8 +131,11 @@ namespace TenmoClient
                 }
             }
         }
-        public void GetBalance()
+
+
+        public void GetBalance(int userId)
         {
+
             Account account = new Account();
             try
             {
@@ -148,5 +152,32 @@ namespace TenmoClient
             Console.WriteLine("The balance is: " + account);
 
         }
+
+        //public void GetBalance()
+        //{
+        //    LoginUser loginUser = new LoginUser();
+        //    API_User apiUser = new API_User();
+        //    string username = Environment.UserName;
+
+        //    List<Account> allAccounts = accountAPI.GetAllAccounts();
+
+        //    Account myAccount = new Account();
+           
+
+
+        //    foreach (Account account in allAccounts)
+        //    {
+        //        if (account.UserId == apiUser.UserId)
+        //        {
+        //            myAccount = account;
+        //        }
+        //    }
+            
+        //    Console.WriteLine();
+        //    Console.WriteLine();
+
+        //    Console.WriteLine("The balance is: " + myAccount.Balance);
+
+        //}
     }
 }
