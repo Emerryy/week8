@@ -8,7 +8,7 @@ namespace TenmoClient
     public class AuthService
     {
         private const string API_BASE_URL = "https://localhost:44315/";
-        private readonly IRestClient client = new RestClient();
+        protected readonly IRestClient client = new RestClient();
 
         public bool IsLoggedIn
         {
