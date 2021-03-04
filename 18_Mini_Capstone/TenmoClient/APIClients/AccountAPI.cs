@@ -10,6 +10,7 @@ namespace TenmoClient.APIClients
     {
         private readonly string API_URL = @"https://localhost:44315/account";
 
+
         public Account GetBalance()
         {
             Account account = new Account();
