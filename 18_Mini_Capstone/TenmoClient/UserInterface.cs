@@ -96,7 +96,11 @@ namespace TenmoClient
                             break;
                         case 4:
                             GetUsers();
-
+                            Console.WriteLine();
+                            Console.WriteLine("Please input the userID of the user you would like to send money to: ");
+                            int userId = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("How many TE bucks would you like to send?");
+                            decimal moneyAmount = Convert.ToDecimal(Console.ReadLine());
 
                             break;
                         case 5:
@@ -208,6 +212,7 @@ namespace TenmoClient
 
 
         }
+
 
 
     }
