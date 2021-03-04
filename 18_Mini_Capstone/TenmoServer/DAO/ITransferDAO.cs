@@ -8,9 +8,9 @@ namespace TenmoServer.DAO
 {
     public interface ITransferDAO
     {
-        public List<Transfer> SentTransfers(int accountFrom);
+        public List<Transfer> SentTransfers(); //int accountFrom
 
-        public List<Transfer> ReceivedTransfers(int accountTo);
+        public List<Transfer> ReceivedTransfers(); //int accountTo
 
         public Transfer TransferDetails(int transferId);
 

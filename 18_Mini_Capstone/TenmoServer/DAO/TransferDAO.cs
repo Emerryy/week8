@@ -17,13 +17,17 @@ namespace TenmoServer.DAO
 
         private string connectionString;
         private string sqlGetSentTransfers = "SELECT * FROM transfers WHERE account_from = @accountFrom";
+        private string sqlGetReceivTransfers = "SELECT * FROM transfers WHERE account_to = @accountTo";
+        private string sqlGetTransDetails = "SELECT * from transfers WHERE transfer_id = @transferId";
+        private string sqlTempAllTransfers = "SELECT * FROM transfers";
+
 
         public TransferDAO(string dbConnectionString)
         {
             connectionString = dbConnectionString;
         }
 
-        public List<Transfer> SentTransfers(int accountFrom)
+        public List<Transfer> SentTransfers() //int accountFrom
         {
             List<Transfer> sent = new List<Transfer>();
             try
@@ -32,8 +36,8 @@ namespace TenmoServer.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand(sqlGetSentTransfers, conn);
-                    cmd.Parameters.AddWithValue("@accountFrom", accountFrom);
+                    SqlCommand cmd = new SqlCommand(sqlTempAllTransfers, conn);
+                    //cmd.Parameters.AddWithValue("@accountFrom", accountFrom);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
@@ -45,13 +49,76 @@ namespace TenmoServer.DAO
             }
             catch (SqlException ex)
             {
-                Console.WriteLine("Problem in the sent transfers");
+                Console.WriteLine(ex.Message + "Problem in the sent transfers");
                 return sent;
-                return ex.Message;
+               
             }
 
             return sent;
         }
+
+        public List<Transfer> ReceivedTransfers() //int accountTo
+        {
+            List<Transfer> received = new List<Transfer>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sqlTempAllTransfers, conn);
+                    //cmd.Parameters.AddWithValue("@accountTo", accountTo);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Transfer temp = GetTransferFromReader(reader);
+                        received.Add(temp);
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message + "Problem in the received transfers");
+                return received;
+
+            }
+
+            return received;
+        }
+
+        public Transfer TransferDetails(int transferId)
+        {
+            Transfer transfer = null;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sqlGetTransDetails, conn);
+                    cmd.Parameters.AddWithValue("@transferId", transferId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    
+                        if (reader.HasRows && reader.Read())
+                        {
+                            transfer = GetTransferFromReader(reader);
+                        }
+                    
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message + "Problem in the transfer details");
+                return transfer;
+
+            }
+
+            return transfer;
+        }
+
+       
 
 
         private Transfer GetTransferFromReader(SqlDataReader reader)
