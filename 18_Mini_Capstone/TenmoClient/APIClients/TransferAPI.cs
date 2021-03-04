@@ -13,7 +13,6 @@ namespace TenmoClient.APIClients
         private readonly string API_URL = @"https://localhost:44315/transfer";
 
         public List<Transfer> GetTransfers()
-
         {
             List<Transfer> transfers = new List<Transfer>();
             RestRequest request = new RestRequest(API_URL);
@@ -30,6 +29,26 @@ namespace TenmoClient.APIClients
             else
             {
                 return response.Data;
+            }
+        }
+
+        public bool AddTransfer(Transfer transfer)
+        {
+            RestRequest request = new RestRequest(API_URL);
+            request.AddJsonBody(transfer);
+
+            IRestResponse response = client.Post(request);
+            if (response.ResponseStatus != ResponseStatus.Completed)
+            {
+                return false;
+            }
+            else if (!response.IsSuccessful)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
 
