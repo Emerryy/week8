@@ -14,5 +14,7 @@ namespace TenmoServer.DAO
 
         public Transfer TransferDetails(int transferId);
 
+        bool AddTransfer(Transfer transfer);
+
     }
 }

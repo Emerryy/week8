@@ -104,7 +104,7 @@ namespace TenmoClient
                             int userId = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("How many TE bucks would you like to send?");
                             decimal moneyAmount = Convert.ToDecimal(Console.ReadLine());
-                            InitiateTransfer(userId, moneyAmount);
+                            AddTransfer(userId, moneyAmount);
 
                             break;
                         case 5:
@@ -217,11 +217,26 @@ namespace TenmoClient
 
         }
 
-       public void InitiateTransfer(int userId, decimal moneyAmount)
+       public void AddTransfer(int userId, decimal moneyAmount)
         {
-            Console.WriteLine("ok");
+            Transfer temp = new Transfer();
+            Account account = accountAPI.GetBalance(userId);
+            temp.TransferTypeId = 1001; //send
+            temp.TransferStatusId = 2001; //approved
+            temp.AccountFrom = account.AccountId;
+            temp.AccountTo = userId;
+            temp.DollarAmount = moneyAmount;
+            bool result = transferAPI.AddTransfer(temp);
+            if (result)
+            {
+                Console.WriteLine("Added.");
+            }
+            else
+            {
+                Console.WriteLine("Error: unable to add.");
+            }
+  
         }
-
 
     }
 }
