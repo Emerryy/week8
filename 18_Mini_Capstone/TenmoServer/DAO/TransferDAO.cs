@@ -21,7 +21,7 @@ namespace TenmoServer.DAO
         private string sqlGetTransDetails = "SELECT * from transfers WHERE transfer_id = @transferId";
         private string sqlTempAllTransfers = "SELECT * FROM transfers";
 
-        private string sqlAddToTransfers = "INSERT INTO transfers(transfer_type_id, transfer_status_id, account_from, amount) VALUES(1001, 2001, @accountFrom, @accountTo, @dollarAmount) ";
+        private string sqlAddToTransfers = "INSERT INTO transfers(transfer_type_id, transfer_status_id, account_from, account_to, amount) VALUES(1001, 2001, @accountFrom, @accountTo, @dollarAmount) ";
 
 
         public TransferDAO(string dbConnectionString)
