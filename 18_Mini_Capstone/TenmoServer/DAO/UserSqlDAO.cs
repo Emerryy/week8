@@ -9,7 +9,7 @@ namespace TenmoServer.DAO
 {
     public class UserSqlDAO : IUserDAO
     {
-        private readonly string connectionString;
+        public string connectionString;
         const decimal startingBalance = 1000;
 
         public UserSqlDAO(string dbConnectionString)
@@ -101,12 +101,12 @@ namespace TenmoServer.DAO
             };
         }
 
-        public int FindTheCurrentUserId()
+        /*public int FindTheCurrentUserId()
         {
             string username = Environment.UserName;
             User user = GetUser(username);
             int userId = user.UserId;
             return userId;
-        }
+        }*/
     }
 }
