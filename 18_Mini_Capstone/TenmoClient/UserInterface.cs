@@ -11,7 +11,11 @@ namespace TenmoClient
         private readonly ConsoleService consoleService = new ConsoleService();
         private readonly AuthService authService = new AuthService();
         private readonly AccountAPI accountAPI = new AccountAPI();
+
         private readonly TransferAPI transferAPI = new TransferAPI();
+
+        private readonly UsersAPI userAPI = new UsersAPI();
+
 
         private bool shouldExit = false;
 
@@ -83,13 +87,17 @@ namespace TenmoClient
                             GetBalance(authService.userId);
                             break;
                         case 2:
+
                             GetTransfers();
+
                             break;
                         case 3:
                             Console.WriteLine("NOT IMPLEMENTED!"); // TODO: Implement me
                             break;
                         case 4:
-                            Console.WriteLine("NOT IMPLEMENTED!"); // TODO: Implement me
+                            GetUsers();
+
+
                             break;
                         case 5:
                             Console.WriteLine("NOT IMPLEMENTED!"); // TODO: Implement me
@@ -158,6 +166,7 @@ namespace TenmoClient
         {
             List<Transfer> transfers = new List<Transfer>();
 
+
             try
             {
                 transfers = transferAPI.GetTransfers();
@@ -175,5 +184,31 @@ namespace TenmoClient
                 Console.WriteLine(transfer);
             }
         }
+
+        public void GetUsers()
+        {
+            List<Users> users = new List<Users>();
+
+            try
+            {
+                users = userAPI.GetUsers();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + "Problem getting users in interface");
+                return;
+            }
+            Console.WriteLine();
+            Console.WriteLine("The available users are: ");
+
+            foreach(Users user in users)
+            {
+                Console.WriteLine(user);
+            }
+
+
+        }
+
+
     }
 }
