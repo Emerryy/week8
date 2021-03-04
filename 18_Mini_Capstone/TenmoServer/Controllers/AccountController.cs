@@ -25,7 +25,6 @@ namespace TenmoServer.Controllers
         [HttpGet("{userId}")]
         public ActionResult<Account> GetBalance(int userId)
         {
-            //userId = int.Parse(User.FindFirst("sub").Value);
             return Ok(accountDAO.GetBalance(userId));
         }
 

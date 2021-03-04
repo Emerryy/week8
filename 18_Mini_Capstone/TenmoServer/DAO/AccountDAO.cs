@@ -15,7 +15,6 @@ namespace TenmoServer.DAO
 
 
         private string connectionString;
-        //public string sqlGetBalance = "SELECT balance FROM accounts WHERE account_id = @accountId";
         public string sqlGetAccounts = "SELECT * FROM accounts";
 
         public AccountDAO(string connectionString)

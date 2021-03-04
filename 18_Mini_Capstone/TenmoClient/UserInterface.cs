@@ -11,6 +11,7 @@ namespace TenmoClient
         private readonly ConsoleService consoleService = new ConsoleService();
         private readonly AuthService authService = new AuthService();
         private readonly AccountAPI accountAPI = new AccountAPI();
+        private readonly TransferAPI transferAPI = new TransferAPI();
 
         private bool shouldExit = false;
 
@@ -82,7 +83,7 @@ namespace TenmoClient
                             GetBalance(authService.userId);
                             break;
                         case 2:
-                            Console.WriteLine("NOT IMPLEMENTED!"); // TODO: Implement me
+                            GetTransfers();
                             break;
                         case 3:
                             Console.WriteLine("NOT IMPLEMENTED!"); // TODO: Implement me
@@ -153,32 +154,26 @@ namespace TenmoClient
             Console.WriteLine("The balance is: " + account);
 
         }
+        public void GetTransfers()
+        {
+            List<Transfer> transfers = new List<Transfer>();
 
-        //public void GetBalance()
-        //{
-        //    LoginUser loginUser = new LoginUser();
-        //    API_User apiUser = new API_User();
-        //    string username = Environment.UserName;
+            try
+            {
+                transfers = transferAPI.GetTransfers();
+            }
 
-        //    List<Account> allAccounts = accountAPI.GetAllAccounts();
-
-        //    Account myAccount = new Account();
-           
-
-
-        //    foreach (Account account in allAccounts)
-        //    {
-        //        if (account.UserId == apiUser.UserId)
-        //        {
-        //            myAccount = account;
-        //        }
-        //    }
-            
-        //    Console.WriteLine();
-        //    Console.WriteLine();
-
-        //    Console.WriteLine("The balance is: " + myAccount.Balance);
-
-        //}
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + "Problem getting transfers in interface");
+               return;
+           }
+            Console.WriteLine();
+            Console.WriteLine("List of Transfers:");
+            foreach(Transfer transfer in transfers)
+            {
+                Console.WriteLine(transfer);
+            }
+        }
     }
 }

@@ -23,6 +23,11 @@ namespace TenmoServer.DAO
             connectionString = dbConnectionString;
         }
 
+        public List<Transfer> ReceivedTransfers(int accountTo)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Transfer> SentTransfers(int accountFrom)
         {
             List<Transfer> sent = new List<Transfer>();
@@ -47,12 +52,16 @@ namespace TenmoServer.DAO
             {
                 Console.WriteLine("Problem in the sent transfers");
                 return sent;
-                return ex.Message;
+                //return ex.Message;
             }
 
             return sent;
         }
 
+        public Transfer TransferDetails(int transferId)
+        {
+            throw new NotImplementedException();
+        }
 
         private Transfer GetTransferFromReader(SqlDataReader reader)
         {
