@@ -17,6 +17,7 @@ namespace TenmoClient
         private readonly UsersAPI userAPI = new UsersAPI();
 
 
+
         private bool shouldExit = false;
 
         public void Start()
@@ -88,7 +89,9 @@ namespace TenmoClient
                             break;
                         case 2:
 
+
                             GetTransfers();
+
 
                             break;
                         case 3:
@@ -213,6 +216,7 @@ namespace TenmoClient
 
         }
 
+       
 
 
     }

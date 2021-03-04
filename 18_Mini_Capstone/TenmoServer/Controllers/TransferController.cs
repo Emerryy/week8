@@ -13,6 +13,7 @@ namespace TenmoServer.Controllers
     public class TransferController : ControllerBase
     {
         private ITransferDAO transferDAO;
+
         public TransferController(ITransferDAO transferDAO)
         {
             this.transferDAO = transferDAO;
@@ -32,6 +33,7 @@ namespace TenmoServer.Controllers
         {
             return Ok(transferDAO.ReceivedTransfers());
         }*/
+
 
 
     }
