@@ -9,6 +9,7 @@ using TenmoServer.Models;
 
 namespace TenmoServer.Controllers
 {
+    //[Authorize]
     [Route("[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -20,10 +21,12 @@ namespace TenmoServer.Controllers
             this.accountDAO = accountDAO;
         }
 
-        [HttpGet]
-        public ActionResult<Account> GetBalance(int accountId)
+
+        [HttpGet("{userId}")]
+        public ActionResult<Account> GetBalance(int userId)
         {
-            return Ok(accountDAO.GetBalance(accountId));
+            //userId = int.Parse(User.FindFirst("sub").Value);
+            return Ok(accountDAO.GetBalance(userId));
         }
 
     }

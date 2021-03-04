@@ -8,7 +8,8 @@ namespace TenmoClient
     public class AuthService
     {
         private const string API_BASE_URL = "https://localhost:44315/";
-        protected readonly IRestClient client = new RestClient();
+        protected IRestClient client = new RestClient();
+        public int userId = 0;
 
         public bool IsLoggedIn
         {
@@ -74,7 +75,9 @@ namespace TenmoClient
             else
             {
                 client.Authenticator = new JwtAuthenticator(response.Data.Token);
-                return response.Data;
+                userId = response.Data.UserId;
+                return response.Data;   //this is the return user object receiving the token. Need to connect this to AccountAPI.
+                
             }
         }
     }

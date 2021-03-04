@@ -79,7 +79,7 @@ namespace TenmoClient
                     switch (menuSelection)
                     {
                         case 1:
-                            GetBalance();
+                            GetBalance(authService.userId);
                             break;
                         case 2:
                             Console.WriteLine("NOT IMPLEMENTED!"); // TODO: Implement me
@@ -134,13 +134,13 @@ namespace TenmoClient
         }
 
 
-        public void GetBalance()
+        public void GetBalance(int userId)
         {
 
             Account account = new Account();
             try
             {
-                account = accountAPI.GetBalance();
+                account = accountAPI.GetBalance(userId);
             }
             catch (Exception ex)
             {

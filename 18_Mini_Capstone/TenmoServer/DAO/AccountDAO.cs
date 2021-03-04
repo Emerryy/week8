@@ -4,6 +4,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using TenmoServer.Models;
+using TenmoServer.Security;
+using TenmoServer.Security.Models;
+using TenmoServer.DAO;
 
 namespace TenmoServer.DAO
 {
@@ -19,9 +22,8 @@ namespace TenmoServer.DAO
         {
             this.connectionString = connectionString;
         }
-        public Account GetBalance(int accountId)
+        public Account GetBalance(int userId)
         {
-
             
             Account returnAccount = new Account();
             try
@@ -30,7 +32,7 @@ namespace TenmoServer.DAO
                 {
                     conn.Open();
                     SqlCommand cmd = new SqlCommand(sqlGetAccounts, conn);
-                    cmd.Parameters.AddWithValue("@accountId", accountId);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
                     
                     while (reader.Read())
@@ -87,5 +89,6 @@ namespace TenmoServer.DAO
             account.Balance = Convert.ToDecimal(reader["balance"]);
             return account;
         }
+
     }
 }
