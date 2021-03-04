@@ -76,7 +76,7 @@ namespace TenmoClient
             {
                 client.Authenticator = new JwtAuthenticator(response.Data.Token);
                 userId = response.Data.UserId;
-                return response.Data;   //this is the return user object receiving the token. Need to connect this to AccountAPI.
+                return response.Data;   
                 
             }
         }

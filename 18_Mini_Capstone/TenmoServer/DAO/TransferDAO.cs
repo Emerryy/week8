@@ -27,7 +27,9 @@ namespace TenmoServer.DAO
             connectionString = dbConnectionString;
         }
 
+
         public List<Transfer> SentTransfers() //int accountFrom
+
         {
             List<Transfer> sent = new List<Transfer>();
             try
@@ -51,7 +53,7 @@ namespace TenmoServer.DAO
             {
                 Console.WriteLine(ex.Message + "Problem in the sent transfers");
                 return sent;
-               
+
             }
 
             return sent;
@@ -119,6 +121,7 @@ namespace TenmoServer.DAO
         }
 
        
+
 
 
         private Transfer GetTransferFromReader(SqlDataReader reader)

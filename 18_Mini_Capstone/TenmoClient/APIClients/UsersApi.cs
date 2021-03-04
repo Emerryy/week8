@@ -4,20 +4,19 @@ using System.Collections.Generic;
 using System.Text;
 using TenmoClient.Data;
 
+
 namespace TenmoClient.APIClients
 {
-    public class TransferAPI : AuthService
+    public class UsersAPI : AuthService
     {
+        private readonly string API_URL = @"https://localhost:44315/users";
 
-
-        private readonly string API_URL = @"https://localhost:44315/transfer";
-
-        public List<Transfer> GetTransfers()
+        public List<Users> GetUsers()
 
         {
-            List<Transfer> transfers = new List<Transfer>();
+            List<Users> users = new List<Users>();
             RestRequest request = new RestRequest(API_URL);
-            IRestResponse<List<Transfer>> response = client.Get<List<Transfer>>(request);
+            IRestResponse<List<Users>> response = client.Get<List<Users>>(request);
 
             if (response.ResponseStatus != ResponseStatus.Completed)
             {
@@ -32,6 +31,7 @@ namespace TenmoClient.APIClients
                 return response.Data;
             }
         }
+
 
     }
 }

@@ -27,12 +27,13 @@ namespace TenmoServer.Controllers
             return Ok(transferDAO.SentTransfers());
         }
 
-        //[HttpGet]
+       /* [HttpGet]
 
-        //public ActionResult<List<Transfer>> ReceivedTransfers()
-        //{
-        //    return Ok(transferDAO.ReceivedTransfers());
-        //}
+        public ActionResult<List<Transfer>> ReceivedTransfers()
+        {
+            return Ok(transferDAO.ReceivedTransfers());
+        }*/
+
 
 
     }
