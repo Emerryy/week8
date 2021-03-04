@@ -13,7 +13,12 @@ namespace TenmoServer.Controllers
     public class TransferController : ControllerBase
     {
         private ITransferDAO transferDAO;
-        
+
+        public TransferController(ITransferDAO transferDAO)
+        {
+            this.transferDAO = transferDAO;
+        }
+
 
         [HttpGet]
         public ActionResult<List<Transfer>> SentTransfers()
@@ -22,12 +27,12 @@ namespace TenmoServer.Controllers
             return Ok(transferDAO.SentTransfers());
         }
 
-        [HttpGet]
+        //[HttpGet]
 
-        public ActionResult<List<Transfer>> ReceivedTransfers()
-        {
-            return Ok(transferDAO.ReceivedTransfers());
-        }
+        //public ActionResult<List<Transfer>> ReceivedTransfers()
+        //{
+        //    return Ok(transferDAO.ReceivedTransfers());
+        //}
 
 
     }

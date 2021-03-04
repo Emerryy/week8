@@ -12,7 +12,7 @@ namespace TenmoClient
         private readonly AuthService authService = new AuthService();
         private readonly AccountAPI accountAPI = new AccountAPI();
         private readonly UsersAPI userAPI = new UsersAPI();
-        //private readonly TransferAPI transferAPI = new TransferAPI();
+        private readonly TransferAPI transferAPI = new TransferAPI();
 
         private bool shouldExit = false;
 
@@ -84,9 +84,9 @@ namespace TenmoClient
                             GetBalance(authService.userId);
                             break;
                         case 2:
-                             //GetTransfers();
+                            GetTransfers();
 
-                            
+
                             break;
                         case 3:
                             Console.WriteLine("NOT IMPLEMENTED!"); // TODO: Implement me
@@ -184,26 +184,26 @@ namespace TenmoClient
 
         }
 
-        //public void GetTransfers()
-        //{
-        //    List<Tranfer> transfers = new List<Tranfer>();
+        public void GetTransfers()
+        {
+            List<Tranfer> transfers = new List<Tranfer>();
 
-        //    try
-        //    {
-        //        transfers = transferAPI.GetTransfers();
-        //    }
+            try
+            {
+                transfers = transferAPI.GetTransfers();
+            }
 
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message + "Problem getting transfers in interface");
-        //        return;
-        //    }
-        //    Console.WriteLine();
-        //    Console.WriteLine("List of Transfers:");
-        //    foreach(Tranfer transfer in transfers)
-        //    {
-        //        Console.WriteLine(transfer);
-        //    }
-        //}
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + "Problem getting transfers in interface");
+                return;
+            }
+            Console.WriteLine();
+            Console.WriteLine("List of Transfers:");
+            foreach (Tranfer transfer in transfers)
+            {
+                Console.WriteLine(transfer);
+            }
+        }
     }
 }

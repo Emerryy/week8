@@ -8,28 +8,28 @@ namespace TenmoClient.APIClients
 {
     public class TransferAPI : AuthService
     {
-        //private readonly string API_URL = @"https://localhost:44315/transfer";
+        private readonly string API_URL = @"https://localhost:44315/transfer";
 
-        //public List<Tranfer> GetTransfers()
+        public List<Tranfer> GetTransfers()
 
-        //{
-        //    List<Tranfer> users = new List<Tranfer>();
-        //    RestRequest request = new RestRequest(API_URL);
-        //    IRestResponse<List<Tranfer>> response = client.Get<List<Tranfer>>(request);
+        {
+            List<Tranfer> users = new List<Tranfer>();
+            RestRequest request = new RestRequest(API_URL);
+            IRestResponse<List<Tranfer>> response = client.Get<List<Tranfer>>(request);
 
-        //    if (response.ResponseStatus != ResponseStatus.Completed)
-        //    {
-        //        throw new Exception("Error occurred - unable to reach server.");
-        //    }
-        //    else if (!response.IsSuccessful)
-        //    {
-        //        throw new Exception("Error occurred - received non-success response: " + (int)response.StatusCode);
-        //    }
-        //    else
-        //    {
-        //        return response.Data;
-        //    }
-        //}
+            if (response.ResponseStatus != ResponseStatus.Completed)
+            {
+                throw new Exception("Error occurred - unable to reach server.");
+            }
+            else if (!response.IsSuccessful)
+            {
+                throw new Exception("Error occurred - received non-success response: " + (int)response.StatusCode);
+            }
+            else
+            {
+                return response.Data;
+            }
+        }
 
     }
 }
