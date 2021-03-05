@@ -32,7 +32,7 @@ namespace TenmoServer.Controllers
         [HttpPut("{userId}")]
         public ActionResult<Account> UpdateBalance(Account account)
         {
-            Account result = accountDAO.UpdateBalance(account.UserId, account.Balance);
+            Account result = accountDAO.UpdateBalance(account.UserId);
             return Ok(result);
         }
 

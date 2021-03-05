@@ -82,9 +82,9 @@ namespace TenmoServer.DAO
 
         }
 
-       public Account UpdateBalance(int userID, decimal amount)
+        public Account UpdateBalance(int userID)
         {
-            Account account = null;
+            Account account = GetAccount(userID);   //AmountToTransfer isn't making it to here.
 
             try
             {
@@ -100,10 +100,10 @@ namespace TenmoServer.DAO
                         Account temp = ReaderToAccount(reader);
                         if (temp.UserId == userID)
                         {
-                            temp.Balance -= amount;
+                            temp.Balance -= account.AmountToTransfer;   //This should be updating the SQL
                             account = temp;
                         }
-                        
+
                     }
 
                 }
