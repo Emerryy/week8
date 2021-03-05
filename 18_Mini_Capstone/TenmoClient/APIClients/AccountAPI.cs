@@ -36,9 +36,10 @@ namespace TenmoClient.APIClients
             }
         }
 
-        public bool UpdateAccountBalance(Transfer transfer)
+        public void UpdateAccountFromBalance(int userID, decimal amount)
         {
-            return true;
+            Account account = GetAccount(userID);
+            account.Balance -= amount;
         }
 
     }
