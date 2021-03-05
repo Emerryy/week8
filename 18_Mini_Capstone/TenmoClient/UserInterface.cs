@@ -18,6 +18,7 @@ namespace TenmoClient
 
 
 
+
         private bool shouldExit = false;
 
         public void Start()
@@ -85,7 +86,10 @@ namespace TenmoClient
                     switch (menuSelection)
                     {
                         case 1:
+
+
                             GetBalance(authService.userId);
+
                             break;
                         case 2:
 
@@ -98,6 +102,7 @@ namespace TenmoClient
                             Console.WriteLine("NOT IMPLEMENTED!"); // TODO: Implement me
                             break;
                         case 4:
+                          
                             GetUsers();
                             Console.WriteLine();
                             Console.WriteLine("Please input the userID of the user you would like to send money to: ");
@@ -105,7 +110,9 @@ namespace TenmoClient
                             Console.WriteLine("How many TE bucks would you like to send?");
                             decimal moneyAmount = Convert.ToDecimal(Console.ReadLine());
                             
+
                             AddTransfer(authService.userId, sendToUserId, moneyAmount);
+
 
                             break;
                         case 5:
@@ -154,11 +161,13 @@ namespace TenmoClient
 
         public void GetBalance(int currentUserId)
         {
-
+           
             Account account = new Account();
             try
             {
+
                 account = accountAPI.GetAccount(currentUserId);
+
             }
             catch (Exception ex)
             {
@@ -221,11 +230,13 @@ namespace TenmoClient
        public void AddTransfer(int currentUserId, int sendToUserId, decimal moneyAmount)
         {
             Transfer temp = new Transfer();
+
             Account fromAccount = accountAPI.GetAccount(currentUserId);
             Account toAccount = accountAPI.GetAccount(sendToUserId);
             temp.TransferTypeId = 1001; //send
             temp.TransferStatusId = 2001; //approved
             temp.AccountFrom = fromAccount.AccountId;
+
             temp.AccountTo = toAccount.AccountId;
             temp.DollarAmount = moneyAmount;
             bool result = transferAPI.AddTransfer(temp);
