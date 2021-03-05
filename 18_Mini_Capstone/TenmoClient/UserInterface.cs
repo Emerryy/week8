@@ -90,7 +90,7 @@ namespace TenmoClient
                         case 2:
 
 
-                            GetTransfers();
+                            GetTransfersByUserId(authService.userId);
                             Console.WriteLine("Please enter the Transfer ID you'd like to see:");
                             int inputTransferId = Convert.ToInt32(Console.ReadLine());
                             GetTransferById(inputTransferId);
@@ -108,7 +108,7 @@ namespace TenmoClient
                             int sendToUserId = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("How many TE bucks would you like to send?");
                             decimal moneyAmount = Convert.ToDecimal(Console.ReadLine());
-                            
+
                             AddTransfer(authService.userId, sendToUserId, moneyAmount);
 
                             break;
@@ -175,26 +175,23 @@ namespace TenmoClient
             Console.WriteLine(account);
 
         }
-        public void GetTransfers()
+        public void GetTransfersByUserId(int userId)
         {
-            List<Transfer> transfers = new List<Transfer>();
+            List<JoinedTransfer> transfers = new List<JoinedTransfer>();
 
+            transfers = transferAPI.GetTransfersByUserId(userId);
 
-            try
-            {
-                transfers = transferAPI.GetTransfers();
-            }
+            Users current = new Users();
+            current.UserId = authService.userId;
 
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + "Problem getting transfers in interface");
-               return;
-           }
             Console.WriteLine();
             Console.WriteLine("List of Transfers:");
-            foreach(Transfer transfer in transfers)
+            foreach (JoinedTransfer transfer in transfers)
             {
-                Console.WriteLine(transfer);
+                
+                    Console.WriteLine(transfer);
+               
+               
             }
         }
 
@@ -202,7 +199,7 @@ namespace TenmoClient
         {
             List<Transfer> allTransfers = transferAPI.GetTransfers();
             Transfer requested = new Transfer();
-            foreach(Transfer transfers in allTransfers)
+            foreach (Transfer transfers in allTransfers)
             {
                 if (transfers.TransferId == inputTransferId)
                 {
@@ -210,10 +207,10 @@ namespace TenmoClient
                 }
                 else
                 {
-                    
+
                 }
             }
-            
+
             if (requested.TransferId == 0)
             {
                 Console.WriteLine("Sorry, that transfer doesn't exist");
@@ -241,7 +238,7 @@ namespace TenmoClient
             Console.WriteLine();
             Console.WriteLine("The available users are: ");
 
-            foreach(Users user in users)
+            foreach (Users user in users)
             {
                 Console.WriteLine(user);
             }
@@ -249,7 +246,7 @@ namespace TenmoClient
 
         }
 
-       public void AddTransfer(int currentUserId, int sendToUserId, decimal moneyAmount)
+        public void AddTransfer(int currentUserId, int sendToUserId, decimal moneyAmount)
         {
             Transfer temp = new Transfer();
             Account fromAccount = accountAPI.GetAccount(currentUserId);
@@ -269,7 +266,7 @@ namespace TenmoClient
             {
                 Console.WriteLine("Error: unable to add.");
             }
-  
+
         }
 
     }

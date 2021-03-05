@@ -32,6 +32,26 @@ namespace TenmoClient.APIClients
             }
         }
 
+        public List<JoinedTransfer> GetTransfersByUserId(int userId)
+        {
+            List<JoinedTransfer> transfers = new List<JoinedTransfer>();
+            RestRequest request = new RestRequest(API_URL);
+            IRestResponse<List<JoinedTransfer>> response = client.Get<List<JoinedTransfer>>(request);
+
+            if (response.ResponseStatus != ResponseStatus.Completed)
+            {
+                throw new Exception("Error occurred - unable to reach server.");
+            }
+            else if (!response.IsSuccessful)
+            {
+                throw new Exception("Error occurred - received non-success response: " + (int)response.StatusCode);
+            }
+            else
+            {
+                return response.Data;
+            }
+        }
+
         public bool AddTransfer(Transfer transfer)
         {
             RestRequest request = new RestRequest(API_URL);

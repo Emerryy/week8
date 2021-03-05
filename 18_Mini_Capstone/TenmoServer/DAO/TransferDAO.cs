@@ -23,6 +23,13 @@ namespace TenmoServer.DAO
         private string sqlAddTransfer = "INSERT INTO transfers (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
             "VALUES(@TransferTypeId, @TransferStatusId, @AccountFrom, @AccountTo, @DollarAmount)";
 
+        private string sqlGetTransferDetailsJoined = " SELECT transfers.transfer_id, fu.username fromUser, tu.username toUser, transfers.amount transferAmount FROM transfers " +
+         "JOIN accounts f ON transfers.account_from = f.account_id " +
+         "JOIN accounts t ON transfers.account_to = t.account_id " +
+         "JOIN users fu ON f.user_id = fu.user_id " +
+         "JOIN users tu ON t.user_id = tu.user_id " +
+         "WHERE t.user_id = @userId OR f.user_id = @userId";
+
 
         private string sqlAddToTransfers = "INSERT INTO transfers(transfer_type_id, transfer_status_id, account_from, account_to, amount) VALUES(1001, 2001, @accountFrom, @accountTo, @dollarAmount) ";
 
@@ -33,38 +40,38 @@ namespace TenmoServer.DAO
         }
 
 
-        public List<Transfer> SentTransfers() //int accountFrom
+        public List<JoinedTransfer> GetTransfersByUserId(int userId) 
 
         {
-            List<Transfer> sent = new List<Transfer>();
+            List<JoinedTransfer> transferDetails = new List<JoinedTransfer>();
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand(sqlTempAllTransfers, conn);
-                    //cmd.Parameters.AddWithValue("@accountFrom", accountFrom);
+                    SqlCommand cmd = new SqlCommand(sqlGetTransferDetailsJoined, conn);
+                    cmd.Parameters.AddWithValue("@userId", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
                     {
-                        Transfer temp = GetTransferFromReader(reader);
-                        sent.Add(temp);
+                        JoinedTransfer temp = JoinedTransferFromReader(reader);
+                        transferDetails.Add(temp);
                     }
                 }
             }
             catch (SqlException ex)
             {
-                Console.WriteLine(ex.Message + "Problem in the sent transfers");
-                return sent;
+                
+                return transferDetails;
 
             }
 
-            return sent;
+            return transferDetails;
         }
 
-        public List<Transfer> ReceivedTransfers() //int accountTo
+        public List<Transfer> GetTransfers() 
         {
             List<Transfer> received = new List<Transfer>();
             try
@@ -86,7 +93,7 @@ namespace TenmoServer.DAO
             }
             catch (SqlException ex)
             {
-                Console.WriteLine(ex.Message + "Problem in the received transfers");
+                Console.WriteLine(ex.Message + "Problem in the get all transfers");
                 return received;
 
             }
@@ -107,12 +114,12 @@ namespace TenmoServer.DAO
                     cmd.Parameters.AddWithValue("@transferId", transferId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    
-                        if (reader.HasRows && reader.Read())
-                        {
-                            transfer = GetTransferFromReader(reader);
-                        }
-                    
+
+                    if (reader.HasRows && reader.Read())
+                    {
+                        transfer = GetTransferFromReader(reader);
+                    }
+
                 }
             }
             catch (SqlException ex)
@@ -154,7 +161,19 @@ namespace TenmoServer.DAO
             return result;
         }
 
-       
+
+        private JoinedTransfer JoinedTransferFromReader(SqlDataReader reader)
+        {
+            return new JoinedTransfer()
+            {
+                TransferId = Convert.ToInt32(reader["transfer_id"]),
+                FromUser = Convert.ToString(reader["fromUser"]),
+                ToUser = Convert.ToString(reader["toUser"]),
+                Type = "Send",
+                Status = "Approved",
+                Amount = Convert.ToDecimal(reader["transferAmount"]),
+            };
+        }
 
 
 
