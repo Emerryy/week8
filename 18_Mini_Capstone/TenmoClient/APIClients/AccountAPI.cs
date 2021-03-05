@@ -36,16 +36,26 @@ namespace TenmoClient.APIClients
             }
         }
 
-        public void UpdateAccountFromBalance(int userID, decimal amount)
+        public Account UpdateAccountFromBalance(int fromUserId, decimal amount)
         {
-            Account account = GetAccount(userID);
-            account.Balance -= amount;
-        }
+            Account fromAccount = GetAccount(fromUserId);
+            RestRequest request = new RestRequest(API_URL + "/" + fromAccount.AccountId);
+            request.AddJsonBody(fromAccount);   //JSON body not being added
+            IRestResponse<Account> response = client.Put<Account>(request);
 
-        public void UpdateAccountToBalance(int userID, decimal amount)
-        {
-            Account account = GetAccount(userID);
-            account.Balance += amount;
+            if (response.ResponseStatus != ResponseStatus.Completed)
+            {
+                throw new Exception("Error occurred - unable to reach server.");
+            }
+            else if (!response.IsSuccessful)
+            {
+                throw new Exception("Error occurred - received non-success response: " + (int)response.StatusCode);
+            }
+            else
+            {
+                return response.Data;
+            }
+
         }
 
     }
