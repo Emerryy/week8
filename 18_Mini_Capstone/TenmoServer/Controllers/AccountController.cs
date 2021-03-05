@@ -28,7 +28,19 @@ namespace TenmoServer.Controllers
             return Ok(accountDAO.GetAccount(userId));
         }
 
-        
+        [HttpPut]
+        public ActionResult UpdateBalance(int userID, decimal amount)
+        {
+            bool result = accountDAO.UpdateBalance(userID, amount);
+            if (result)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
 
     }
 }

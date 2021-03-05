@@ -42,5 +42,11 @@ namespace TenmoClient.APIClients
             account.Balance -= amount;
         }
 
+        public void UpdateAccountToBalance(int userID, decimal amount)
+        {
+            Account account = GetAccount(userID);
+            account.Balance += amount;
+        }
+
     }
 }

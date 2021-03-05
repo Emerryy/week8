@@ -17,6 +17,7 @@ namespace TenmoServer.DAO
         private string connectionString;
         public string sqlGetAccounts = "SELECT * FROM accounts";
         private string sqlGetAccountByUser = "SELECT * FROM accounts WHERE user_id = @userId";
+        private string sqlUpdateBalance = "UPDATE accounts SET balance = @adjustedBalance WHERE user_id = @userID";
 
         public AccountDAO(string connectionString)
         {
@@ -81,7 +82,35 @@ namespace TenmoServer.DAO
 
         }
 
-       
+       public bool UpdateBalance(int userID, decimal amount)
+        {
+            bool result = false;
+            Account account = GetAccount(userID);
+            decimal adjustedBalance = account.Balance - amount;
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(sqlUpdateBalance, conn);
+                    cmd.Parameters.AddWithValue("@userId", userID);
+                    cmd.Parameters.AddWithValue("@balance", adjustedBalance);
+                    int count = cmd.ExecuteNonQuery();
+
+                    if (count > 0)
+                    {
+                        result = true;
+                    }
+
+                }
+            }
+            catch (SqlException ex)
+            {
+                result = false;
+            }
+            return result;
+        }
 
 
 
