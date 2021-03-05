@@ -20,12 +20,12 @@ namespace TenmoServer.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult<List<Transfer>> SentTransfers()
-        {
-            //userId = int.Parse(User.FindFirst("sub").Value);
-            return Ok(transferDAO.SentTransfers());
-        }
+        //[HttpGet]
+        //public ActionResult<List<Transfer>> GetTransfers()
+        //{
+        //    //userId = int.Parse(User.FindFirst("sub").Value);
+        //    return Ok(transferDAO.GetTransfers());
+        //}
 
         [HttpPost]
         public ActionResult AddTransfer(Transfer transfer)
@@ -39,6 +39,12 @@ namespace TenmoServer.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [HttpGet/*("{userId}")*/]
+        public ActionResult<List<JoinedTransfer>> GetTransfersByUserId(/*int userId*/)
+        {
+            return Ok(transferDAO.GetTransfersByUserId(/*userId*/));
         }
 
 
