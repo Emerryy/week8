@@ -16,13 +16,13 @@ namespace TenmoServer.DAO
 
         private string connectionString;
         public string sqlGetAccounts = "SELECT * FROM accounts";
-        private string sqlGetAccountByUser = "SELECT account_id FROM accounts WHERE user_id = @userId";
+        private string sqlGetAccountByUser = "SELECT * FROM accounts WHERE user_id = @userId";
 
         public AccountDAO(string connectionString)
         {
             this.connectionString = connectionString;
         }
-        public Account GetBalance(int userId)
+        public Account GetAccount(int userId)
         {
 
             Account returnAccount = new Account();
@@ -31,8 +31,8 @@ namespace TenmoServer.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(sqlGetAccounts, conn);
-                    cmd.Parameters.AddWithValue("@user_id", userId);
+                    SqlCommand cmd = new SqlCommand(sqlGetAccountByUser, conn);
+                    cmd.Parameters.AddWithValue("@userId", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())

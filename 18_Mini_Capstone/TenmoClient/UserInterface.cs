@@ -15,7 +15,7 @@ namespace TenmoClient
         private readonly TransferAPI transferAPI = new TransferAPI();
 
         private readonly UsersAPI userAPI = new UsersAPI();
-        
+
 
 
 
@@ -86,10 +86,10 @@ namespace TenmoClient
                     switch (menuSelection)
                     {
                         case 1:
-                            
-                            
+
+
                             GetBalance(authService.userId);
-                           
+
                             break;
                         case 2:
 
@@ -102,7 +102,7 @@ namespace TenmoClient
                             Console.WriteLine("NOT IMPLEMENTED!"); // TODO: Implement me
                             break;
                         case 4:
-                            Account currentUser = accountAPI.GetBalance(authService.userId);
+                          
                             GetUsers();
                             Console.WriteLine();
                             Console.WriteLine("Please input the userID of the user you would like to send money to: ");
@@ -110,7 +110,9 @@ namespace TenmoClient
                             Console.WriteLine("How many TE bucks would you like to send?");
                             decimal moneyAmount = Convert.ToDecimal(Console.ReadLine());
                             
-                            AddTransfer(currentUser, sendToUserId, moneyAmount);
+
+                            AddTransfer(authService.userId, sendToUserId, moneyAmount);
+
 
                             break;
                         case 5:
@@ -157,13 +159,15 @@ namespace TenmoClient
         }
 
 
-        public void GetBalance(int userId)
+        public void GetBalance(int currentUserId)
         {
-            userId = authService.userId;
+           
             Account account = new Account();
             try
             {
-                account = accountAPI.GetBalance(userId);
+
+                account = accountAPI.GetAccount(currentUserId);
+
             }
             catch (Exception ex)
             {
@@ -173,7 +177,7 @@ namespace TenmoClient
             Console.WriteLine();
             Console.WriteLine();
 
-            Console.WriteLine("The balance is: " + account);
+            Console.WriteLine(account);
 
         }
         public void GetTransfers()
@@ -223,15 +227,16 @@ namespace TenmoClient
 
         }
 
-       public void AddTransfer(Account currentUser, int sendToUserId, decimal moneyAmount)
+       public void AddTransfer(int currentUserId, int sendToUserId, decimal moneyAmount)
         {
             Transfer temp = new Transfer();
-            Account toAccount = new Account();
-            toAccount = accountAPI.GetBalance(sendToUserId);
-            
+
+            Account fromAccount = accountAPI.GetAccount(currentUserId);
+            Account toAccount = accountAPI.GetAccount(sendToUserId);
             temp.TransferTypeId = 1001; //send
             temp.TransferStatusId = 2001; //approved
-            temp.AccountFrom = currentUser.AccountId;
+            temp.AccountFrom = fromAccount.AccountId;
+
             temp.AccountTo = toAccount.AccountId;
             temp.DollarAmount = moneyAmount;
             bool result = transferAPI.AddTransfer(temp);

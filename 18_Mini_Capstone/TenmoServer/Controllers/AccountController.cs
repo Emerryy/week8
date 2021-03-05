@@ -23,9 +23,9 @@ namespace TenmoServer.Controllers
 
 
         [HttpGet("{userId}")]
-        public ActionResult<Account> GetBalance(int userId)
+        public ActionResult<Account> GetAccount(int userId)
         {
-            return Ok(accountDAO.GetBalance(userId));
+            return Ok(accountDAO.GetAccount(userId));
         }
 
         
