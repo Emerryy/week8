@@ -13,11 +13,11 @@ namespace TenmoServer.DAO
     public class AccountDAO : IAccountDAO
     {
 
-
         private string connectionString;
         public string sqlGetAccounts = "SELECT * FROM accounts";
         private string sqlGetAccountByUser = "SELECT * FROM accounts WHERE user_id = @userId";
         private string sqlUpdateBalance = "UPDATE accounts SET balance = @adjustedBalance WHERE user_id = @userID";
+
 
         public AccountDAO(string connectionString)
         {
@@ -82,34 +82,37 @@ namespace TenmoServer.DAO
 
         }
 
-       public bool UpdateBalance(int userID, decimal amount)
+       public Account UpdateBalance(int userID, decimal amount)
         {
-            bool result = false;
-            Account account = GetAccount(userID);
-            decimal adjustedBalance = account.Balance - amount;
+            Account account = null;
 
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(sqlUpdateBalance, conn);
-                    cmd.Parameters.AddWithValue("@userId", userID);
-                    cmd.Parameters.AddWithValue("@balance", adjustedBalance);
-                    int count = cmd.ExecuteNonQuery();
+                    SqlCommand cmd = new SqlCommand(sqlGetAccounts, conn);
 
-                    if (count > 0)
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
                     {
-                        result = true;
+                        Account temp = ReaderToAccount(reader);
+                        if (temp.UserId == userID)
+                        {
+                            temp.Balance -= amount;
+                            account = temp;
+                        }
+                        
                     }
 
                 }
             }
             catch (SqlException ex)
             {
-                result = false;
+                throw;
             }
-            return result;
+            return account;
         }
 
 
