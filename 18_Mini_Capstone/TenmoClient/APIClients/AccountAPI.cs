@@ -16,7 +16,7 @@ namespace TenmoClient.APIClients
         //UserService.Token 
 
 
-        public Account GetBalance(int userId)
+        public Account GetAccount(int userId)
         {
             Account account = new Account();
             RestRequest request = new RestRequest(API_URL + "/" + userId);
@@ -35,7 +35,6 @@ namespace TenmoClient.APIClients
                 return response.Data;
             }
         }
-
 
     }
 }

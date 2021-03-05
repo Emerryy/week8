@@ -15,7 +15,6 @@ namespace TenmoClient
         private readonly TransferAPI transferAPI = new TransferAPI();
 
         private readonly UsersAPI userAPI = new UsersAPI();
-        private int currentUserId = 0; 
 
 
 
@@ -86,8 +85,7 @@ namespace TenmoClient
                     switch (menuSelection)
                     {
                         case 1:
-                            currentUserId = authService.userId;
-                            GetBalance(currentUserId);
+                            GetBalance(authService.userId);
                             break;
                         case 2:
 
@@ -107,7 +105,7 @@ namespace TenmoClient
                             Console.WriteLine("How many TE bucks would you like to send?");
                             decimal moneyAmount = Convert.ToDecimal(Console.ReadLine());
                             
-                            AddTransfer(currentUserId, sendToUserId, moneyAmount);
+                            AddTransfer(authService.userId, sendToUserId, moneyAmount);
 
                             break;
                         case 5:
@@ -160,7 +158,7 @@ namespace TenmoClient
             Account account = new Account();
             try
             {
-                account = accountAPI.GetBalance(currentUserId);
+                account = accountAPI.GetAccount(currentUserId);
             }
             catch (Exception ex)
             {
@@ -170,7 +168,7 @@ namespace TenmoClient
             Console.WriteLine();
             Console.WriteLine();
 
-            Console.WriteLine("The balance is: " + account);
+            Console.WriteLine(account);
 
         }
         public void GetTransfers()
@@ -223,12 +221,11 @@ namespace TenmoClient
        public void AddTransfer(int currentUserId, int sendToUserId, decimal moneyAmount)
         {
             Transfer temp = new Transfer();
-            Account toAccount = accountAPI.GetBalance(sendToUserId);
-            Account from = new Account();
-            from = accountAPI.GetBalance(currentUserId);
+            Account fromAccount = accountAPI.GetAccount(currentUserId);
+            Account toAccount = accountAPI.GetAccount(sendToUserId);
             temp.TransferTypeId = 1001; //send
             temp.TransferStatusId = 2001; //approved
-            temp.AccountFrom = from.AccountId;
+            temp.AccountFrom = fromAccount.AccountId;
             temp.AccountTo = toAccount.AccountId;
             temp.DollarAmount = moneyAmount;
             bool result = transferAPI.AddTransfer(temp);
