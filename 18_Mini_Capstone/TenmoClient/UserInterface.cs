@@ -201,18 +201,26 @@ namespace TenmoClient
         public void GetTransferById(int inputTransferId)
         {
             List<Transfer> allTransfers = transferAPI.GetTransfers();
+            Transfer requested = new Transfer();
             foreach(Transfer transfers in allTransfers)
             {
                 if (transfers.TransferId == inputTransferId)
                 {
-                    Console.WriteLine();
-                    Console.WriteLine(transfers);
+                    requested = transfers;
                 }
                 else
                 {
-                    Console.WriteLine();
-                    Console.WriteLine("Sorry, that transfer doesn't exist.");
+                    
                 }
+            }
+            
+            if (requested.TransferId == 0)
+            {
+                Console.WriteLine("Sorry, that transfer doesn't exist");
+            }
+            else
+            {
+                Console.WriteLine(requested);
             }
 
         }
