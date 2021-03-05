@@ -9,7 +9,7 @@ namespace TenmoClient.APIClients
     public class TransferAPI : AuthService
     {
 
-
+        private AccountAPI accountAPI = new AccountAPI();
         private readonly string API_URL = @"https://localhost:44315/transfer";
 
         public List<Transfer> GetTransfers()
