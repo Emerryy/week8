@@ -15,7 +15,7 @@ namespace TenmoClient
         private readonly TransferAPI transferAPI = new TransferAPI();
 
         private readonly UsersAPI userAPI = new UsersAPI();
-        private int currentUserId = 0; 
+        
 
 
 
@@ -86,8 +86,10 @@ namespace TenmoClient
                     switch (menuSelection)
                     {
                         case 1:
-                            currentUserId = authService.userId;
-                            GetBalance(currentUserId);
+                            
+                            
+                            GetBalance(authService.userId);
+                           
                             break;
                         case 2:
 
@@ -100,6 +102,7 @@ namespace TenmoClient
                             Console.WriteLine("NOT IMPLEMENTED!"); // TODO: Implement me
                             break;
                         case 4:
+                            Account currentUser = accountAPI.GetBalance(authService.userId);
                             GetUsers();
                             Console.WriteLine();
                             Console.WriteLine("Please input the userID of the user you would like to send money to: ");
@@ -107,7 +110,7 @@ namespace TenmoClient
                             Console.WriteLine("How many TE bucks would you like to send?");
                             decimal moneyAmount = Convert.ToDecimal(Console.ReadLine());
                             
-                            AddTransfer(currentUserId, sendToUserId, moneyAmount);
+                            AddTransfer(currentUser, sendToUserId, moneyAmount);
 
                             break;
                         case 5:
@@ -154,13 +157,13 @@ namespace TenmoClient
         }
 
 
-        public void GetBalance(int currentUserId)
+        public void GetBalance(int userId)
         {
-
+            userId = authService.userId;
             Account account = new Account();
             try
             {
-                account = accountAPI.GetBalance(currentUserId);
+                account = accountAPI.GetBalance(userId);
             }
             catch (Exception ex)
             {
@@ -220,15 +223,15 @@ namespace TenmoClient
 
         }
 
-       public void AddTransfer(int currentUserId, int sendToUserId, decimal moneyAmount)
+       public void AddTransfer(Account currentUser, int sendToUserId, decimal moneyAmount)
         {
             Transfer temp = new Transfer();
-            Account toAccount = accountAPI.GetBalance(sendToUserId);
-            Account from = new Account();
-            from = accountAPI.GetBalance(currentUserId);
+            Account toAccount = new Account();
+            toAccount = accountAPI.GetBalance(sendToUserId);
+            
             temp.TransferTypeId = 1001; //send
             temp.TransferStatusId = 2001; //approved
-            temp.AccountFrom = from.AccountId;
+            temp.AccountFrom = currentUser.AccountId;
             temp.AccountTo = toAccount.AccountId;
             temp.DollarAmount = moneyAmount;
             bool result = transferAPI.AddTransfer(temp);
