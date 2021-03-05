@@ -95,6 +95,10 @@ namespace TenmoClient
 
 
                             GetTransfers();
+                            Console.WriteLine("Please enter the Transfer ID you'd like to see:");
+                            int inputTransferId = Convert.ToInt32(Console.ReadLine());
+                            GetTransferById(inputTransferId);
+
 
 
                             break;
@@ -201,6 +205,25 @@ namespace TenmoClient
             {
                 Console.WriteLine(transfer);
             }
+        }
+
+        public void GetTransferById(int inputTransferId)
+        {
+            List<Transfer> allTransfers = transferAPI.GetTransfers();
+            foreach(Transfer transfers in allTransfers)
+            {
+                if (transfers.TransferId == inputTransferId)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(transfers);
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Sorry, that transfer doesn't exist.");
+                }
+            }
+
         }
 
         public void GetUsers()
