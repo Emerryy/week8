@@ -135,11 +135,11 @@ namespace TenmoServer.DAO
                 {
                     conn.Open();
                     SqlCommand cmd = new SqlCommand(sqlAddTransfer, conn);
-                    cmd.Parameters.AddWithValue("@transfer_type_id", transfer.TransferTypeId);
-                    cmd.Parameters.AddWithValue("@transfer_status_id", transfer.TransferStatusId);
-                    cmd.Parameters.AddWithValue("@account_from", transfer.AccountFrom);
-                    cmd.Parameters.AddWithValue("@account_to", transfer.AccountTo);
-                    cmd.Parameters.AddWithValue("@amount", transfer.DollarAmount);
+                    cmd.Parameters.AddWithValue("@TransferTypeId", transfer.TransferTypeId);
+                    cmd.Parameters.AddWithValue("@TransferStatusId", transfer.TransferStatusId);
+                    cmd.Parameters.AddWithValue("@AccountFrom", transfer.AccountFrom);
+                    cmd.Parameters.AddWithValue("@AccountTo", transfer.AccountTo);
+                    cmd.Parameters.AddWithValue("@DollarAmount", transfer.DollarAmount);
                     int count = cmd.ExecuteNonQuery();
                     if (count > 0)
                     {

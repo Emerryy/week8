@@ -36,5 +36,10 @@ namespace TenmoClient.APIClients
             }
         }
 
+        public bool UpdateAccountBalance(Transfer transfer)
+        {
+            return true;
+        }
+
     }
 }
