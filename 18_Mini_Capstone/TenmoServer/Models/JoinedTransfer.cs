@@ -8,6 +8,7 @@ namespace TenmoServer.Models
     public class JoinedTransfer
     {
         public int TransferId { get; set; }
+
         public string FromUser { get; set; }
         public string ToUser { get; set; }
         public string Type { get; set; }

@@ -32,7 +32,7 @@ namespace TenmoClient.APIClients
             }
         }
 
-        public List<JoinedTransfer> GetTransfersByUserId(/*int userId*/)
+        public List<JoinedTransfer> GetTransfersByUserId(int userId)
         {
             List<JoinedTransfer> transfers = new List<JoinedTransfer>();
             RestRequest request = new RestRequest(API_URL);

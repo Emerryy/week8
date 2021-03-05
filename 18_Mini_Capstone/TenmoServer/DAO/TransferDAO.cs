@@ -23,12 +23,12 @@ namespace TenmoServer.DAO
         private string sqlAddTransfer = "INSERT INTO transfers (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
             "VALUES(@TransferTypeId, @TransferStatusId, @AccountFrom, @AccountTo, @DollarAmount)";
 
-        private string sqlGetTransferDetailsJoined = " SELECT transfers.transfer_id, fu.username, tu.username, transfers.amount FROM transfers" +
-         "JOIN accounts f ON transfers.account_from = f.account_id" +
-         "JOIN accounts t ON transfers.account_to = t.account_id" +
-         "JOIN users fu ON f.user_id = fu.user_id" +
-         "JOIN users tu ON t.user_id = tu.user_id";
-         //"WHERE t.user_id = @userId OR f.user_id = @userId";
+        private string sqlGetTransferDetailsJoined = " SELECT transfers.transfer_id, fu.username fromUser, tu.username toUser, transfers.amount transferAmount FROM transfers " +
+         "JOIN accounts f ON transfers.account_from = f.account_id " +
+         "JOIN accounts t ON transfers.account_to = t.account_id " +
+         "JOIN users fu ON f.user_id = fu.user_id " +
+         "JOIN users tu ON t.user_id = tu.user_id " +
+         "WHERE t.user_id = @userId OR f.user_id = @userId";
 
 
         private string sqlAddToTransfers = "INSERT INTO transfers(transfer_type_id, transfer_status_id, account_from, account_to, amount) VALUES(1001, 2001, @accountFrom, @accountTo, @dollarAmount) ";
@@ -40,7 +40,7 @@ namespace TenmoServer.DAO
         }
 
 
-        public List<JoinedTransfer> GetTransfersByUserId(/*int userId*/) 
+        public List<JoinedTransfer> GetTransfersByUserId(int userId) 
 
         {
             List<JoinedTransfer> transferDetails = new List<JoinedTransfer>();
@@ -51,7 +51,7 @@ namespace TenmoServer.DAO
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand(sqlGetTransferDetailsJoined, conn);
-                    //cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@userId", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
@@ -167,11 +167,11 @@ namespace TenmoServer.DAO
             return new JoinedTransfer()
             {
                 TransferId = Convert.ToInt32(reader["transfer_id"]),
-                FromUser = Convert.ToString(reader["fu.username"]),
-                ToUser = Convert.ToString(reader["tu.username"]),
+                FromUser = Convert.ToString(reader["fromUser"]),
+                ToUser = Convert.ToString(reader["toUser"]),
                 Type = "Send",
                 Status = "Approved",
-                Amount = Convert.ToDecimal(reader["transfers.amount"]),
+                Amount = Convert.ToDecimal(reader["transferAmount"]),
             };
         }
 

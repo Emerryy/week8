@@ -10,7 +10,7 @@ namespace TenmoServer.DAO
     {
         public List<Transfer> GetTransfers(); //int accountFrom
 
-        public List<JoinedTransfer> GetTransfersByUserId(/*int userId*/);
+        public List<JoinedTransfer> GetTransfersByUserId(int userId);
 
         public Transfer TransferDetails(int transferId);
 

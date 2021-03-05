@@ -90,7 +90,7 @@ namespace TenmoClient
                         case 2:
 
 
-                            GetTransfersByUserId(/*authService.userId*/);
+                            GetTransfersByUserId(authService.userId);
                             Console.WriteLine("Please enter the Transfer ID you'd like to see:");
                             int inputTransferId = Convert.ToInt32(Console.ReadLine());
                             GetTransferById(inputTransferId);
@@ -175,11 +175,11 @@ namespace TenmoClient
             Console.WriteLine(account);
 
         }
-        public void GetTransfersByUserId(/*int userId*/)
+        public void GetTransfersByUserId(int userId)
         {
             List<JoinedTransfer> transfers = new List<JoinedTransfer>();
 
-            transfers = transferAPI.GetTransfersByUserId(/*userId*/);
+            transfers = transferAPI.GetTransfersByUserId(userId);
 
             Users current = new Users();
             current.UserId = authService.userId;
@@ -188,13 +188,10 @@ namespace TenmoClient
             Console.WriteLine("List of Transfers:");
             foreach (JoinedTransfer transfer in transfers)
             {
-                //if(transfer.ToUser.Equals(current.Username) || transfer.FromUser.Equals(current.Username) )
-
-                Console.WriteLine(transfer);
-                //else
-                //{
-
-                //}
+                
+                    Console.WriteLine(transfer);
+               
+               
             }
         }
 
