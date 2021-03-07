@@ -19,14 +19,14 @@ namespace TenmoServer.DAO
 
         private string sqlAddTransfer = "INSERT INTO transfers (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
             "VALUES(@TransferTypeId, @TransferStatusId, @AccountFrom, @AccountTo, @DollarAmount)";
-           
+
 
         private string sqlGetTransferDetailsJoined = " SELECT transfers.transfer_id, fu.username fromUser, tu.username toUser, transfers.amount transferAmount, fu.user_id fromId, tu.user_id toId FROM transfers " +
          "JOIN accounts f ON transfers.account_from = f.account_id " +
          "JOIN accounts t ON transfers.account_to = t.account_id " +
          "JOIN users fu ON f.user_id = fu.user_id " +
          "JOIN users tu ON t.user_id = tu.user_id ";
-         
+
 
 
         private string sqlAddToTransfers = "INSERT INTO transfers(transfer_type_id, transfer_status_id, account_from, account_to, amount) VALUES(1001, 2001, @accountFrom, @accountTo, @dollarAmount) ";
@@ -38,7 +38,7 @@ namespace TenmoServer.DAO
         }
 
 
-        public List<JoinedTransfer> GetTransfers() 
+        public List<JoinedTransfer> GetTransfers()
 
         {
             List<JoinedTransfer> transferDetails = new List<JoinedTransfer>();
@@ -49,7 +49,7 @@ namespace TenmoServer.DAO
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand(sqlGetTransferDetailsJoined, conn);
-                    
+
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
@@ -61,7 +61,7 @@ namespace TenmoServer.DAO
             }
             catch (SqlException ex)
             {
-                
+
                 return transferDetails;
 
             }
@@ -70,11 +70,11 @@ namespace TenmoServer.DAO
         }
 
 
-       
+
 
         public bool AddTransfer(Transfer transfer)
         {
-           
+
             bool result = false;
 
             try

@@ -263,7 +263,7 @@ namespace TenmoClient
 
             List<Users> allUsers = userAPI.GetUsers();
             Users sentUser = new Users();
-            foreach(Users user in allUsers)
+            foreach (Users user in allUsers)
             {
                 if (user.UserId == sendToUserId)
                 {
