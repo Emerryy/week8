@@ -16,9 +16,10 @@ namespace TenmoServer.DAO
 
 
         private string connectionString;
-       
+
         private string sqlAddTransfer = "INSERT INTO transfers (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
             "VALUES(@TransferTypeId, @TransferStatusId, @AccountFrom, @AccountTo, @DollarAmount)";
+           
 
         private string sqlGetTransferDetailsJoined = " SELECT transfers.transfer_id, fu.username fromUser, tu.username toUser, transfers.amount transferAmount, fu.user_id fromId, tu.user_id toId FROM transfers " +
          "JOIN accounts f ON transfers.account_from = f.account_id " +
@@ -73,6 +74,7 @@ namespace TenmoServer.DAO
 
         public bool AddTransfer(Transfer transfer)
         {
+           
             bool result = false;
 
             try
@@ -86,6 +88,7 @@ namespace TenmoServer.DAO
                     cmd.Parameters.AddWithValue("@AccountFrom", transfer.AccountFrom);
                     cmd.Parameters.AddWithValue("@AccountTo", transfer.AccountTo);
                     cmd.Parameters.AddWithValue("@DollarAmount", transfer.DollarAmount);
+
                     int count = cmd.ExecuteNonQuery();
                     if (count > 0)
                     {
