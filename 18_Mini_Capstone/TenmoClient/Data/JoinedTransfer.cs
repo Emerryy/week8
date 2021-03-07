@@ -17,7 +17,7 @@ namespace TenmoClient.Data
 
         public override string ToString()
         {
-            return $"Transfer ID: {TransferId} - From: {FromUser} - To: {ToUser} - Type: {Type} - Status: {Status} - Amount: ${Amount} ";
+            return $"Transfer ID: {TransferId} - From: {FromUser}(UserId: {FromId}) - To: {ToUser}(UserId: {ToId}) - Type: {Type} - Status: {Status} - Amount: ${Amount} ";
         }
 
     }

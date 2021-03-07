@@ -260,22 +260,46 @@ namespace TenmoClient
             Transfer temp = new Transfer();
             Account fromAccount = accountAPI.GetAccount(currentUserId);
             Account toAccount = accountAPI.GetAccount(sendToUserId);
-            temp.TransferTypeId = 1001; //send
-            temp.TransferStatusId = 2001; //approved
-            temp.AccountFrom = fromAccount.AccountId;
-            temp.AccountTo = toAccount.AccountId;
-            temp.DollarAmount = moneyAmount;
-            bool result = transferAPI.AddTransfer(temp);
-            accountAPI.UpdateAccountFromBalance(currentUserId, (moneyAmount * -1));
-            accountAPI.UpdateAccountFromBalance(sendToUserId, moneyAmount);
-            if (result)
+
+            List<Users> allUsers = userAPI.GetUsers();
+            Users sentUser = new Users();
+            foreach(Users user in allUsers)
             {
-                Console.WriteLine(temp);
+                if (user.UserId == sendToUserId)
+                {
+                    sentUser = user;
+                }
+                else
+                {
+
+                }
+            }
+            if (moneyAmount <= fromAccount.Balance)
+            {
+
+                temp.TransferTypeId = 1001; //send
+                temp.TransferStatusId = 2001; //approved
+                temp.AccountFrom = fromAccount.AccountId;
+                temp.AccountTo = toAccount.AccountId;
+                temp.DollarAmount = moneyAmount;
+                bool result = transferAPI.AddTransfer(temp);
+                accountAPI.UpdateAccountFromBalance(currentUserId, (moneyAmount * -1));
+                accountAPI.UpdateAccountFromBalance(sendToUserId, moneyAmount);
+                if (result)
+                {
+                    Console.WriteLine($"Success! You sent {sentUser.Username} ${moneyAmount}");
+                }
+                else
+                {
+                    Console.WriteLine("Error: unable to add.");
+                }
+
             }
             else
             {
-                Console.WriteLine("Error: unable to add.");
+                Console.WriteLine("You cannot send more money than you have!");
             }
+
 
         }
 
