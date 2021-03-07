@@ -39,11 +39,16 @@ namespace TenmoClient.APIClients
         public Account UpdateAccountFromBalance(int fromUserId, decimal amount)
         {
             Account fromAccount = GetAccount(fromUserId);
+
             fromAccount.AmountToTransfer = amount;
-            fromAccount.Balance -= amount;
+            
+
             RestRequest request = new RestRequest(API_URL + "/" + fromAccount.AccountId);
+
             request.AddJsonBody(fromAccount);
+
             IRestResponse<Account> response = client.Put<Account>(request);
+
 
             if (response.ResponseStatus != ResponseStatus.Completed)
             {
@@ -57,8 +62,9 @@ namespace TenmoClient.APIClients
             {
                 return response.Data;
             }
-
         }
+
+       
 
     }
 }

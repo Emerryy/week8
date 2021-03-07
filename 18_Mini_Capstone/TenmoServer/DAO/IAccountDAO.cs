@@ -10,6 +10,6 @@ namespace TenmoServer.DAO
     {
         public Account GetAccount(int userId);
 
-        public Account UpdateBalance(Account account);
+        public Account UpdateBalance(Account accountFrom);
     }
 }

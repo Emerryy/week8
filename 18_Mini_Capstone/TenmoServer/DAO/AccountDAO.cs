@@ -82,22 +82,24 @@ namespace TenmoServer.DAO
 
         }
 
-        public Account UpdateBalance(Account account)
+        public Account UpdateBalance(Account accountFrom)
         {
-            decimal transferAmount = account.AmountToTransfer;
-            decimal adjustedBalance = account.Balance - transferAmount;
+            decimal transferAmount = accountFrom.AmountToTransfer;
+            decimal adjustedFrom = accountFrom.Balance + transferAmount;
+           
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
                     SqlCommand cmd = new SqlCommand(sqlUpdateBalance, conn);
-                    cmd.Parameters.AddWithValue("@userID", account.UserId);
-                    cmd.Parameters.AddWithValue("@adjustedBalance", adjustedBalance);
+                    cmd.Parameters.AddWithValue("@userID", accountFrom.UserId);
+                    cmd.Parameters.AddWithValue("@adjustedBalance", adjustedFrom);
+                    
                     int count = cmd.ExecuteNonQuery();
                     if (count > 0)
                     {
-                        return account;
+                        return accountFrom;
                     }
                     
 
@@ -107,7 +109,7 @@ namespace TenmoServer.DAO
             {
                 throw;
             }
-            return account;
+            return accountFrom;
         }
 
 
