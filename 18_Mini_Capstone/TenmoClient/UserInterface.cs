@@ -108,7 +108,7 @@ namespace TenmoClient
                             int sendToUserId = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("How many TE bucks would you like to send?");
                             decimal moneyAmount = Convert.ToDecimal(Console.ReadLine());
-
+            
                             AddTransfer(authService.userId, sendToUserId, moneyAmount);
 
                             break;

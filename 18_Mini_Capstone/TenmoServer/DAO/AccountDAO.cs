@@ -82,9 +82,9 @@ namespace TenmoServer.DAO
 
         }
 
-        public Account UpdateBalance(int userID)
+        public Account UpdateBalance(Account account)
         {
-            Account account = GetAccount(userID);   //AmountToTransfer isn't making it to here.
+            //Account account = GetAccount(userID);   //AmountToTransfer isn't making it to here.
 
             try
             {
@@ -98,7 +98,7 @@ namespace TenmoServer.DAO
                     while (reader.Read())
                     {
                         Account temp = ReaderToAccount(reader);
-                        if (temp.UserId == userID)
+                        if (temp.UserId == account.UserId)
                         {
                             temp.Balance -= account.AmountToTransfer;   //This should be updating the SQL
                             account = temp;
