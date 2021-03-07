@@ -84,27 +84,22 @@ namespace TenmoServer.DAO
 
         public Account UpdateBalance(Account account)
         {
-            //Account account = GetAccount(userID);   //AmountToTransfer isn't making it to here.
-
+            decimal transferAmount = account.AmountToTransfer;
+            decimal adjustedBalance = account.Balance - transferAmount;
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(sqlGetAccounts, conn);
-
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
+                    SqlCommand cmd = new SqlCommand(sqlUpdateBalance, conn);
+                    cmd.Parameters.AddWithValue("@userID", account.UserId);
+                    cmd.Parameters.AddWithValue("@adjustedBalance", adjustedBalance);
+                    int count = cmd.ExecuteNonQuery();
+                    if (count > 0)
                     {
-                        Account temp = ReaderToAccount(reader);
-                        if (temp.UserId == account.UserId)
-                        {
-                            temp.Balance -= account.AmountToTransfer;   //This should be updating the SQL
-                            account = temp;
-                        }
-
+                        return account;
                     }
+                    
 
                 }
             }
