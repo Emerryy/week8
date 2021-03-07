@@ -12,27 +12,27 @@ namespace TenmoClient.APIClients
         private AccountAPI accountAPI = new AccountAPI();
         private readonly string API_URL = @"https://localhost:44315/transfer";
 
-        public List<Transfer> GetTransfers()
-        {
-            List<Transfer> transfers = new List<Transfer>();
-            RestRequest request = new RestRequest(API_URL);
-            IRestResponse<List<Transfer>> response = client.Get<List<Transfer>>(request);
+        //public List<Transfer> GetTransfers()
+        //{
+        //    List<Transfer> transfers = new List<Transfer>();
+        //    RestRequest request = new RestRequest(API_URL);
+        //    IRestResponse<List<Transfer>> response = client.Get<List<Transfer>>(request);
 
-            if (response.ResponseStatus != ResponseStatus.Completed)
-            {
-                throw new Exception("Error occurred - unable to reach server.");
-            }
-            else if (!response.IsSuccessful)
-            {
-                throw new Exception("Error occurred - received non-success response: " + (int)response.StatusCode);
-            }
-            else
-            {
-                return response.Data;
-            }
-        }
+        //    if (response.ResponseStatus != ResponseStatus.Completed)
+        //    {
+        //        throw new Exception("Error occurred - unable to reach server.");
+        //    }
+        //    else if (!response.IsSuccessful)
+        //    {
+        //        throw new Exception("Error occurred - received non-success response: " + (int)response.StatusCode);
+        //    }
+        //    else
+        //    {
+        //        return response.Data;
+        //    }
+        //}
 
-        public List<JoinedTransfer> GetTransfersByUserId(int userId)
+        public List<JoinedTransfer> GetTransfers()
         {
             List<JoinedTransfer> transfers = new List<JoinedTransfer>();
             RestRequest request = new RestRequest(API_URL);

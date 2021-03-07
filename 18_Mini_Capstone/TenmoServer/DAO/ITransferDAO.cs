@@ -8,11 +8,11 @@ namespace TenmoServer.DAO
 {
     public interface ITransferDAO
     {
-        public List<Transfer> GetTransfers(); //int accountFrom
+        
 
-        public List<JoinedTransfer> GetTransfersByUserId(int userId);
+        public List<JoinedTransfer> GetTransfers();
 
-        public Transfer TransferDetails(int transferId);
+        
 
         bool AddTransfer(Transfer transfer);
 

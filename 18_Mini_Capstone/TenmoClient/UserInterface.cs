@@ -179,29 +179,31 @@ namespace TenmoClient
         {
             List<JoinedTransfer> transfers = new List<JoinedTransfer>();
 
-            transfers = transferAPI.GetTransfersByUserId(userId);
+            transfers = transferAPI.GetTransfers();
 
-            Users current = new Users();
-            current.UserId = authService.userId;
 
             Console.WriteLine();
             Console.WriteLine("List of Transfers:");
             foreach (JoinedTransfer transfer in transfers)
             {
-                
-                    Console.WriteLine(transfer);
-               
-               
+                if (transfer.ToId != authService.userId && transfer.FromId == authService.userId)
+                {
+                    Console.WriteLine($" Transfer ID: {transfer.TransferId} To: {transfer.ToUser}  ${transfer.Amount}");
+                }
+               else if (transfer.ToId == authService.userId && transfer.FromId != authService.userId)
+                {
+                    Console.WriteLine($" Transfer ID: {transfer.TransferId} From: {transfer.ToUser}  ${transfer.Amount}");
+                }
             }
         }
 
         public void GetTransferById(int inputTransferId)
         {
-            List<Transfer> allTransfers = transferAPI.GetTransfers();
-            Transfer requested = new Transfer();
-            foreach (Transfer transfers in allTransfers)
+            List<JoinedTransfer> allTransfers = transferAPI.GetTransfers();
+            JoinedTransfer requested = new JoinedTransfer();
+            foreach (JoinedTransfer transfers in allTransfers)
             {
-                if (transfers.TransferId == inputTransferId)
+                if (transfers.TransferId == inputTransferId && (transfers.FromId == authService.userId || transfers.ToId == authService.userId))
                 {
                     requested = transfers;
                 }
@@ -213,7 +215,7 @@ namespace TenmoClient
 
             if (requested.TransferId == 0)
             {
-                Console.WriteLine("Sorry, that transfer doesn't exist");
+                Console.WriteLine("Sorry, that's not a valid transfer ID.");
             }
             else
             {
@@ -240,7 +242,14 @@ namespace TenmoClient
 
             foreach (Users user in users)
             {
-                Console.WriteLine(user);
+                if (user.UserId != authService.userId)
+                {
+                    Console.WriteLine(user);
+                }
+                else
+                {
+
+                }
             }
 
 

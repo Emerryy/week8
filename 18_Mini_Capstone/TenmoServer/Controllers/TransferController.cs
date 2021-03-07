@@ -42,9 +42,9 @@ namespace TenmoServer.Controllers
         }
 
         [HttpGet/*("{userId}")*/]
-        public ActionResult<List<JoinedTransfer>> GetTransfersByUserId(int userId)
+        public ActionResult<List<JoinedTransfer>> GetTransfers()
         {
-            return Ok(transferDAO.GetTransfersByUserId(userId));
+            return Ok(transferDAO.GetTransfers());
         }
 
 
