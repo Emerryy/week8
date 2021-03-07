@@ -42,6 +42,7 @@ namespace TenmoClient.APIClients
 
             fromAccount.AmountToTransfer = amount;
 
+
             RestRequest request = new RestRequest(API_URL + "/" + fromAccount.AccountId);
 
             request.AddJsonBody(fromAccount);
@@ -63,7 +64,7 @@ namespace TenmoClient.APIClients
             }
         }
 
-       
+
 
     }
 }
