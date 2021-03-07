@@ -40,7 +40,6 @@ namespace TenmoClient.APIClients
         {
             Account fromAccount = GetAccount(fromUserId);
             fromAccount.AmountToTransfer = amount;
-            fromAccount.Balance -= amount;
             RestRequest request = new RestRequest(API_URL + "/" + fromAccount.AccountId);
             request.AddJsonBody(fromAccount);
             IRestResponse<Account> response = client.Put<Account>(request);
