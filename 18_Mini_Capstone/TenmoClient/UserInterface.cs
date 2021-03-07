@@ -266,7 +266,8 @@ namespace TenmoClient
             temp.AccountTo = toAccount.AccountId;
             temp.DollarAmount = moneyAmount;
             bool result = transferAPI.AddTransfer(temp);
-            accountAPI.UpdateAccountFromBalance(currentUserId, moneyAmount);
+            accountAPI.UpdateAccountFromBalance(currentUserId, (moneyAmount * -1));
+            accountAPI.UpdateAccountFromBalance(sendToUserId, moneyAmount);
             if (result)
             {
                 Console.WriteLine(temp);

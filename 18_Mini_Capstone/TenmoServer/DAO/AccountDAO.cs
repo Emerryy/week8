@@ -17,7 +17,6 @@ namespace TenmoServer.DAO
         public string sqlGetAccounts = "SELECT * FROM accounts";
         private string sqlGetAccountByUser = "SELECT * FROM accounts WHERE user_id = @userId";
         private string sqlUpdateBalance = "UPDATE accounts SET balance = @adjustedBalance WHERE user_id = @userID";
-        private string sqlAddBalance = "UPDATE accounts SET balance = @addedBalance WHERE user_id = @userID";
 
 
         public AccountDAO(string connectionString)
@@ -83,33 +82,24 @@ namespace TenmoServer.DAO
 
         }
 
-        public List<Account> UpdateBalance(Account fromAccount, Account toAccount)
+        public Account UpdateBalance(Account account)
         {
-            List<Account> accounts = new List<Account>();
-            decimal transferAmount = fromAccount.AmountToTransfer;
-            decimal adjustedBalance = fromAccount.Balance - transferAmount;
-            decimal addedBalance = toAccount.Balance + transferAmount;
+            decimal transferAmount = account.AmountToTransfer;
+            decimal adjustedBalance = account.Balance - transferAmount;
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
                     SqlCommand cmd = new SqlCommand(sqlUpdateBalance, conn);
-                    cmd.Parameters.AddWithValue("@userID", fromAccount.UserId);
+                    cmd.Parameters.AddWithValue("@userID", account.UserId);
                     cmd.Parameters.AddWithValue("@adjustedBalance", adjustedBalance);
                     int count = cmd.ExecuteNonQuery();
                     if (count > 0)
                     {
-                        accounts.Add(fromAccount);
+                        return account;
                     }
-                    SqlCommand cmd2 = new SqlCommand(sqlAddBalance, conn);
-                    cmd.Parameters.AddWithValue("@userID", toAccount.UserId);
-                    cmd.Parameters.AddWithValue("@addedBalance", addedBalance);
-                    int count2 = cmd.ExecuteNonQuery();
-                    if (count2 > 0)
-                    {
-                        accounts.Add(toAccount);
-                    }
+
 
                 }
             }
@@ -117,7 +107,7 @@ namespace TenmoServer.DAO
             {
                 throw;
             }
-            return accounts;
+            return account;
         }
 
 

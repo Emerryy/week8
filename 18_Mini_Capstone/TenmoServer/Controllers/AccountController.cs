@@ -30,11 +30,13 @@ namespace TenmoServer.Controllers
 
 
         [HttpPut("{userId}")]
-        public ActionResult<Account> UpdateBalance(Account account)
+        public ActionResult<Account> UpdateBalance(Account accountFrom)
         {
-            Account result = accountDAO.UpdateBalance(account);
+            Account result = accountDAO.UpdateBalance(accountFrom);
             return Ok(result);
         }
+
+       
 
     }
 }
